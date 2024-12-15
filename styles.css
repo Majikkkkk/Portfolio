@@ -57,6 +57,28 @@ nav a:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
 }
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ff69b4;
+    border-radius: 5px;
+    background-color: #111;
+    color: #fff;
+}
+form button {
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+form button:hover {
+    background-color: #e75480;
+}
 footer {
     text-align: center;
     background-color: #000;
@@ -67,4 +89,14 @@ footer {
     width: 100%;
     font-size: 14px;
     border-top: 2px solid #ff69b4;
+}
+footer a {
+    color: #ff69b4;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+footer a:hover {
+    color: #fff;
 }
