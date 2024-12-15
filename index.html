@@ -22,11 +22,17 @@
 <section id="about" class="section">
     <h2>About Me</h2>
     <p>This is the about section. Write something amazing about yourself here.</p>
+    <img src="your-picture.jpg" alt="Your Picture" class="about-picture">
 </section>
 
 <section id="gallery" class="section">
     <h2>Gallery</h2>
-    <div class="gallery">
+    <div class="albums">
+        <button class="album" onclick="showGallery()">Album 1</button>
+        <button class="album" onclick="showGallery()">Album 2</button>
+        <button class="album" onclick="showGallery()">Album 3</button>
+    </div>
+    <div class="gallery" id="gallery-grid" style="display:none;">
         <img src="image1.jpg" alt="Gallery Image 1">
         <img src="image2.jpg" alt="Gallery Image 2">
         <img src="image3.jpg" alt="Gallery Image 3">
@@ -65,6 +71,13 @@
     <a href="https://linkedin.com" target="_blank" style="color: #ff69b4; margin: 0 10px;">LinkedIn</a>
     <p style="margin-top: 10px;">Powered by w3.css</p>
 </footer>
+
+<script>
+    function showGallery() {
+        const gallery = document.getElementById('gallery-grid');
+        gallery.style.display = gallery.style.display === 'none' ? 'grid' : 'none';
+    }
+</script>
 
 </body>
 </html>
