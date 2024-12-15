@@ -3,81 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Marjinel's Portfolio</title>
+    <link rel="stylesheet" href="include.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Marjinel's Portfolio - showcasing skills, projects, and contact information.">
+    <meta name="keywords" content="Portfolio, Web Developer, Computer Science, Marjinel A.">
+    <meta name="author" content="Marjinel A.">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-
 <header>
-    Welcome to My Website
+    <a href="#" class="logo">Marjinel A.</a>
+    <ul class="navmenu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
 </header>
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#work">Where I Work</a>
-    <a href="#contact">Contact</a>
-</nav>
+<!-- Home Section -->
+<section class="home" id="home">
+    <div class="home-text">
+        <h2>Hello, I'm Marjinel</h2>
+        <h3>Student</h3>
+        <p>I am a second-year Bachelor of Science in Computer Science (BSCS) student at Lyceum of the Philippines University (LPU) Cavite.</p>
+        <div class="home-btn">
+            <a href="#contact" class="btn">Contact Info</a>
+            <a href="resume.pdf" class="btn">Download CV <i class="ph-bold ph-file-text"></i></a>
+        </div>
+    </div>
+    <div class="home-img">
+        <img src="aji.jpg" alt="Marjinel A.">
+    </div>
+</section>
 
-<section id="about" class="section">
+<!-- About Section -->
+<section class="about" id="about">
     <h2>About Me</h2>
-    <p>This is the about section. Write something amazing about yourself here.</p>
-    <img src="your-picture.jpg" alt="Your Picture" class="about-picture">
+    <p>I am presently a student who is deeply committed to continuous learning and self-improvement. I embrace opportunities to be taught, as I believe education is a fundamental tool for personal and professional growth. In addition to my academic pursuits, I have a strong interest in learning different languages, which I consider valuable for broadening my perspectives and preparing for future global opportunities. </p>
+    <p>In addition to my personal interests, I am actively involved in school organizations, which further enrich my learning experience. I am a member of the Student Association for Technology Advancement (SATA), where we engage in seminars that enhance our technical knowledge. I am also part of Liceo Esport Cavite, serving as a committee member in the Office of the Vice President for External Affairs. These roles help me develop my leadership and communication skills. Additionally, I participate in quiz bees, where I recently achieved third place in Ethics and was the champion in The Contemporary World. During my junior high years at La Union National High School (LUNHS), I was a consistent honor student and earned high honors during my Senior High School years. These academic and extracurricular experiences reflect my commitment to personal and intellectual growth.</p>
+    <p>I am highly passionate about coding and technology. My dedication to this field drives me to constantly refine my skills, explore new programming concepts, and stay updated with advancements in technology. Alongside coding, I also have various hobbies that bring balance and joy to my life. I enjoy experimenting with makeup, reading books, playing online games, watching anime and Korean dramas, and capturing moments through photography. These activities allow me to express creativity, relax, and explore different aspects of culture and entertainment.</p>
 </section>
 
-<section id="gallery" class="section">
-    <h2>Gallery</h2>
-    <div class="albums">
-        <button class="album" onclick="showGallery()">Album 1</button>
-        <button class="album" onclick="showGallery()">Album 2</button>
-        <button class="album" onclick="showGallery()">Album 3</button>
-    </div>
-    <div class="gallery" id="gallery-grid" style="display:none;">
-        <img src="image1.jpg" alt="Gallery Image 1">
-        <img src="image2.jpg" alt="Gallery Image 2">
-        <img src="image3.jpg" alt="Gallery Image 3">
-        <img src="image4.jpg" alt="Gallery Image 4">
+<!-- Skills Section -->
+<section class="skills" id="skills">
+    <h2>Skills</h2>
+    <div class="skill-container">
+        <div class="skill">
+            <h3>Web Development</h3>
+            <p>HTML, CSS, JavaScript</p>
+        </div>
+        <div class="skill">
+            <h3>Programming</h3>
+            <p>Python, Java</p>
+        </div>
+        <div class="skill">
+            <h3>Tools</h3>
+            <p>Git, VS Code</p>
+        </div>
     </div>
 </section>
 
-<section id="work" class="section">
-    <h2>Where I Work</h2>
-    <p>I'd love your feedback!</p>
-    <div style="margin-top: 20px;">
-        <p><strong>Location:</strong> Chicago, US</p>
-        <p><strong>Phone:</strong> +00 151515</p>
-        <p><strong>Email:</strong> <a href="mailto:mail@mail.com" style="color: #ff69b4;">mail@mail.com</a></p>
-        <p>Swing by for a cup of coffee, or leave me a note:</p>
-    </div>
-    <form action="/submit" method="POST" style="margin-top: 20px;">
-        <label for="name" style="display: block; margin: 10px 0;">Name:</label>
-        <input type="text" id="name" name="name" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #ff69b4;">
-
-        <label for="email" style="display: block; margin: 10px 0;">Email:</label>
-        <input type="email" id="email" name="email" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #ff69b4;">
-
-        <label for="message" style="display: block; margin: 10px 0;">Message:</label>
-        <textarea id="message" name="message" rows="5" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #ff69b4;"></textarea>
-
-        <button type="submit" style="margin-top: 10px; padding: 10px 20px; border-radius: 5px; background-color: #ff69b4; border: none; color: #000; font-weight: bold; cursor: pointer;">Send</button>
-    </form>
+<section class="contact" id="contact">
+    <h2>Contact</h2>
+    <p>If you'd like to get in touch, feel free to reach out via the following platforms:</p>
+    <ul>
+        <li>Email: <a href="mailto:mjcsyhfn@gmail.com">mjcsyhfn@gmail.com</a></li>
+        <li>Phone: +63982942264</li>
+    </ul>
 </section>
 
 <footer>
     <p>Connect with me:</p>
     <a href="https://www.facebook.com/marjinelhufana" target="_blank" style="color: #ff69b4; margin: 0 10px;">Facebook</a> |
-    <a href="https://www.instagram.com/itsahzyi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" style="color: #ff69b4; margin: 0 10px;">Instagram</a> |
+    <a href="https://www.instagram.com/itsahzyi" target="_blank" style="color: #ff69b4; margin: 0 10px;">Instagram</a> |
     <a href="https://twitter.com" target="_blank" style="color: #ff69b4; margin: 0 10px;">Twitter</a> |
-    <a href="https://linkedin.com" target="_blank" style="color: #ff69b4; margin: 0 10px;">LinkedIn</a>
+    <a href="https://ph.linkedin.com/in/mj-csy-223155338" target="_blank" style="color: #ff69b4; margin: 0 10px;">LinkedIn</a>
     <p style="margin-top: 10px;">Marjinel Casauay</p>
 </footer>
-
-<script>
-    function showGallery() {
-        const gallery = document.getElementById('gallery-grid');
-        gallery.style.display = gallery.style.display === 'none' ? 'grid' : 'none';
-    }
-</script>
 
 </body>
 </html>
