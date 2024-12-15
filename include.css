@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    background-color: #f7f7f2;
+    color: #1e1e24;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 8rem;
+    background-color: #f7f7f2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    color: #1e1e24;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.navmenu {
+    display: flex;
+}
+
+.navmenu li {
+    margin: 0 1.5rem;
+}
+
+.navmenu a {
+    color: #1e1e24;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navmenu a:hover {
+    transform: translateY(-5px);
+    color: #0078ff;
+}
+
+
+.home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5rem 8rem;
+}
+
+.home-text {
+    flex: 1;
+}
+
+.home-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.home-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.home-text p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.home-btn a {
+    background-color: #0078ff;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.home-btn a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.home-img img {
+    width: 300px;
+    height: auto;
+    border-radius: 50%;
+}
+
+
+section {
+    padding: 5rem 8rem;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #1e1e24;
+}
+
+section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.about, .contact {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 3rem 6rem;
+    border-radius: 10px;
+}
+
+.skills .skill-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.skills .skill {
+    flex: 1;
+    background: #ffffff;
+    padding: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    background-color: #1e1e24;
+    color: #f7f7f2;
+    font-size: 1rem;
+}
+
+footer a {
+    color: #ff69b4;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: #0078ff;
+}
