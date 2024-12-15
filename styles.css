@@ -5,6 +5,7 @@ body {
     background-color: #000;
     color: #fff;
 }
+
 header {
     background-color: #000;
     color: #ff69b4;
@@ -13,12 +14,14 @@ header {
     font-size: 24px;
     font-weight: bold;
 }
+
 nav {
     display: flex;
     justify-content: center;
     background-color: #111;
     padding: 10px;
 }
+
 nav a {
     color: #fff;
     text-decoration: none;
@@ -28,10 +31,12 @@ nav a {
     background-color: #222;
     transition: background-color 0.3s, color 0.3s;
 }
+
 nav a:hover {
     background-color: #ff69b4;
     color: #000;
 }
+
 .section {
     max-width: 1200px;
     margin: 30px auto;
@@ -42,21 +47,58 @@ nav a:hover {
     border: 2px solid #ff69b4;
     border-radius: 10px;
 }
+
+.about-picture {
+    width: 150px; /* Adjust the size of the picture */
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.albums {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.album {
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+.album:hover {
+    background-color: #e75480;
+}
+
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
+
 .gallery img {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .gallery img:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
 }
+
 form input, form textarea {
     width: 100%;
     padding: 10px;
@@ -66,6 +108,7 @@ form input, form textarea {
     background-color: #111;
     color: #fff;
 }
+
 form button {
     padding: 10px 20px;
     background-color: #ff69b4;
@@ -76,9 +119,11 @@ form button {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 form button:hover {
     background-color: #e75480;
 }
+
 footer {
     text-align: center;
     background-color: #000;
@@ -90,6 +135,7 @@ footer {
     font-size: 14px;
     border-top: 2px solid #ff69b4;
 }
+
 footer a {
     color: #ff69b4;
     text-decoration: none;
@@ -97,6 +143,7 @@ footer a {
     font-size: 16px;
     transition: color 0.3s;
 }
+
 footer a:hover {
     color: #fff;
 }
