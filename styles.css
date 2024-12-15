@@ -2,37 +2,45 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #000;
+    color: #fff;
 }
 header {
-    background-color: #333;
-    color: white;
+    background-color: #000;
+    color: #ff69b4;
     padding: 20px;
     text-align: center;
+    font-size: 24px;
+    font-weight: bold;
 }
 nav {
     display: flex;
     justify-content: center;
-    background-color: #444;
+    background-color: #111;
     padding: 10px;
 }
 nav a {
-    color: white;
+    color: #fff;
     text-decoration: none;
     margin: 0 15px;
     padding: 10px;
     border-radius: 5px;
+    background-color: #222;
+    transition: background-color 0.3s, color 0.3s;
 }
 nav a:hover {
-    background-color: #555;
+    background-color: #ff69b4;
+    color: #000;
 }
 .section {
     max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #111;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid #ff69b4;
+    border-radius: 10px;
 }
 .gallery {
     display: grid;
@@ -41,15 +49,22 @@ nav a:hover {
 }
 .gallery img {
     width: 100%;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
 }
 footer {
     text-align: center;
-    background-color: #333;
-    color: white;
+    background-color: #000;
+    color: #ff69b4;
     padding: 20px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 14px;
+    border-top: 2px solid #ff69b4;
 }
