@@ -53,7 +53,6 @@ header {
     color: #0078ff;
 }
 
-
 .home {
     display: flex;
     justify-content: space-between;
@@ -101,7 +100,6 @@ header {
     border-radius: 50%;
 }
 
-
 section {
     padding: 5rem 8rem;
 }
@@ -125,18 +123,35 @@ section p {
     border-radius: 10px;
 }
 
-.skills .skill-container {
+.projects .project-container {
     display: flex;
     gap: 2rem;
+    cursor: pointer;
 }
 
-.skills .skill {
+.projects .project {
     flex: 1;
     background: #ffffff;
     padding: 2rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projects .project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.projects .project a {
+    display: block;
+    color: #1e1e24;
+    text-decoration: none;
+}
+
+.projects .project a:hover {
+    color: #0078ff;
 }
 
 footer {
