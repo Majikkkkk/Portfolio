@@ -1,0 +1,15 @@
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(36, 59, 83, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 59, 83, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: #243b53;
+}

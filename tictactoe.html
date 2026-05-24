@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tic Tac Toe — Marjinel</title>
+<style>
+:root{
+  --bg: #ffffff;
+  --fg: #0b0b0f;
+  --muted: #606471;
+  --accent: #ff4fa3; /* pink */
+  --accent-2: #111317; /* black */
+  --panel-bg: #ffffff;
+  --cell-bg: #ffffff;
+}
+/* dark theme */
+.dark{
+  --bg: #07080a;
+  --fg: #eef0f3;
+  --muted: #9aa0a6;
+  --accent: #ff7ab6;
+  --accent-2: #ffffff;
+  --panel-bg: #0d1114;
+  --cell-bg: #0d1114;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:20px;display:flex;min-height:100vh;align-items:flex-start;justify-content:center}
+.container{max-width:1100px;width:100%;display:grid;grid-template-columns:380px 1fr;gap:30px;padding:12px}
+.panel{background:var(--panel-bg);border:1px solid rgba(11,11,15,0.06);border-radius:14px;padding:20px;box-shadow:0 10px 30px rgba(11,11,15,0.06)}
+.header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff87c6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem}
+.logo{border:0;cursor:pointer}
+.h1{font-size:1.12rem;font-weight:800}
+.controls label{display:block;font-size:0.85rem;color:var(--muted);margin-top:12px}
+.input,select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(11,11,15,0.06);margin-top:8px;font-size:0.95rem}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:transparent;border:1px solid rgba(11,11,15,0.06);color:var(--fg)}
+.board-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.board{--board-size: min(86vw,640px);width:var(--board-size);height:var(--board-size);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:12px;padding:8px}
+.cell{background:var(--cell-bg);border:2px solid rgba(11,11,15,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:calc(var(--board-size) / 6);font-weight:800;color:var(--fg);cursor:pointer;user-select:none}
+.cell.x{color:#ff3b30}
+.cell.o{color:#0066ff}
+.cell.disabled{cursor:default;opacity:0.9}
+.status{font-size:1rem;color:var(--muted);margin-top:6px}
+.row{display:flex;gap:12px;align-items:center}
+.score{display:flex;gap:18px;align-items:center}
+.badge{background:#fff;border:1px solid rgba(11,11,15,0.04);padding:10px 14px;border-radius:10px;font-weight:800}
+.footer-note{font-size:0.85rem;color:var(--muted);margin-top:12px}
+@media(max-width:1000px){
+  .container{grid-template-columns:1fr;align-items:start}
+  .panel{padding:16px}
+  .board{--board-size: min(92vw,560px);gap:10px}
+  .logo{width:48px;height:48px}
+}
+@media(max-width:420px){
+  .board{--board-size: min(96vw,420px)}
+  .input{padding:10px}
+  .btn{padding:10px 12px;font-size:0.95rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <div class="header">
+      <button id="themeToggle" class="logo" aria-pressed="false" title="Toggle theme">TTT</button>
+      <div>
+        <div class="h1">Tic Tac Toe</div>
+        <div style="font-size:0.85rem;color:var(--muted)">Single-player vs Bot • Choose difficulty & score limit</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <label>Player name</label>
+      <input id="playerName" class="input" placeholder="Your name" value="Player" />
+
+      <label>Difficulty</label>
+      <select id="difficulty" class="input">
+        <option value="easy">Easy</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+
+      <label>Theme</label>
+      <select id="themeSelect" class="input">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+
+      <label>Accent color</label>
+      <input id="accentColor" class="input" type="color" value="#ff4fa3" />
+
+      <label>Background color</label>
+      <select id="backgroundPreset" class="input">
+        <option value="#ffffff">White</option>
+        <option value="#000000">Black</option>
+        <option value="#2f59ff">Blue</option>
+        <option value="#ff4fa3">Pink</option>
+        <option value="#8a62ff">Purple</option>
+        <option value="custom">Custom...</option>
+      </select>
+      <input id="backgroundColor" class="input" type="color" value="#ffffff" />
+
+      <label>Target score (0 = infinite)</label>
+      <input id="targetScore" class="input" type="number" min="0" step="1" value="3" />
+
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="startBtn" class="btn btn-primary">Start Game</button>
+        <button id="resetBtn" class="btn btn-ghost">Reset All</button>
+      </div>
+
+      <div class="footer-note">Tip: set target to 0 for no limit. Player is X and always starts.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="board-wrap">
+      <div style="display:flex;justify-content:space-between;width:100%;align-items:center;margin-bottom:6px">
+        <div class="row">
+          <div class="badge" id="pLabel">Player: Player (X)</div>
+          <div class="badge" id="botLabel">Bot: Computer (O)</div>
+        </div>
+        <div class="score">
+          <div style="text-align:right">
+            <div style="font-size:0.8rem;color:var(--muted)">Score</div>
+            <div style="font-weight:800;font-size:1.05rem" id="playerScore">0</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:0.8rem;color:var(--muted)">Bot</div>
+            <div style="font-weight:800;font-size:1.05rem" id="botScore">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="board" id="board">
+        <div class="cell" data-i="0"></div>
+        <div class="cell" data-i="1"></div>
+        <div class="cell" data-i="2"></div>
+        <div class="cell" data-i="3"></div>
+        <div class="cell" data-i="4"></div>
+        <div class="cell" data-i="5"></div>
+        <div class="cell" data-i="6"></div>
+        <div class="cell" data-i="7"></div>
+        <div class="cell" data-i="8"></div>
+      </div>
+
+      <div class="status" id="status">Press Start to begin</div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <button id="newRound" class="btn btn-ghost">New Round</button>
+        <button id="swapStart" class="btn btn-ghost">Swap Starter</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Game state
+let boardState = Array(9).fill('');
+let player = 'X', bot = 'O';
+let playerStarts = true;
+let playing = false;
+let playerName = '';
+let target = 3; // 0 means infinite
+let ps = 0, bs = 0;
+
+const cells = [...document.querySelectorAll('.cell')];
+const status = document.getElementById('status');
+const playerScoreEl = document.getElementById('playerScore');
+const botScoreEl = document.getElementById('botScore');
+const pLabel = document.getElementById('pLabel');
+const botLabel = document.getElementById('botLabel');
+const themeSelect = document.getElementById('themeSelect');
+const accentColor = document.getElementById('accentColor');
+const backgroundPreset = document.getElementById('backgroundPreset');
+const backgroundColor = document.getElementById('backgroundColor');
+
+function getReadableColors(bg){
+  const hex = bg.replace('#','');
+  const r = parseInt(hex.substring(0,2),16);
+  const g = parseInt(hex.substring(2,4),16);
+  const b = parseInt(hex.substring(4,6),16);
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  if(brightness < 140) return {fg: '#eef0f3', muted: '#9aa0a6', panel: 'rgba(255,255,255,0.08)', cell: 'rgba(255,255,255,0.16)'};
+  return {fg: '#0b0b0f', muted: '#606471', panel: '#ffffff', cell: '#ffffff'};
+}
+
+function applyTheme(themeMode, accent, bgColor){
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = themeMode === 'dark' || (themeMode === 'system' && prefersDark);
+  document.documentElement.classList.toggle('dark', isDark);
+  document.documentElement.style.setProperty('--accent', accent || '#ff4fa3');
+  const bg = bgColor || '#ffffff';
+  document.documentElement.style.setProperty('--bg', bg);
+  const colors = getReadableColors(bg);
+  document.documentElement.style.setProperty('--fg', colors.fg);
+  document.documentElement.style.setProperty('--muted', colors.muted);
+  document.documentElement.style.setProperty('--panel-bg', colors.panel);
+  document.documentElement.style.setProperty('--cell-bg', colors.cell);
+  document.getElementById('themeToggle').setAttribute('aria-pressed', isDark);
+  if(themeSelect) themeSelect.value = themeMode || 'system';
+  if(accentColor) accentColor.value = accent || '#ff4fa3';
+  if(backgroundColor) backgroundColor.value = bg;
+  if(backgroundPreset) backgroundPreset.value = ['#ffffff','#000000','#2f59ff','#ff4fa3','#8a62ff'].includes(bg.toLowerCase()) ? bg.toLowerCase() : 'custom';
+  localStorage.setItem('ttt-theme', themeMode || 'system');
+  localStorage.setItem('ttt-accent', accent || '#ff4fa3');
+  localStorage.setItem('ttt-bg', bg);
+}
+
+function updateLabels(){
+  const name = document.getElementById('playerName').value || 'Player';
+  playerName = name;
+  pLabel.textContent = `Player: ${name} (${player})`;
+  botLabel.textContent = `Bot: Computer (${bot})`;
+}
+
+document.getElementById('playerName').addEventListener('input',updateLabels);
+
+document.getElementById('difficulty').addEventListener('change',()=>{});
+if(themeSelect){
+  themeSelect.addEventListener('change',()=>{
+    applyTheme(themeSelect.value, accentColor.value, backgroundColor.value);
+  });
+}
+if(accentColor){
+  accentColor.addEventListener('input',()=>{
+    applyTheme(themeSelect.value, accentColor.value, backgroundColor.value);
+  });
+}
+if(backgroundPreset){
+  backgroundPreset.addEventListener('change',()=>{
+    const value = backgroundPreset.value;
+    if(value === 'custom'){
+      backgroundColor.style.display = 'block';
+      applyTheme(themeSelect.value, accentColor.value, backgroundColor.value);
+    } else {
+      backgroundColor.style.display = 'block';
+      backgroundColor.value = value;
+      applyTheme(themeSelect.value, accentColor.value, value);
+    }
+  });
+}
+if(backgroundColor){
+  backgroundColor.addEventListener('input',()=>{
+    backgroundPreset.value = 'custom';
+    applyTheme(themeSelect.value, accentColor.value, backgroundColor.value);
+  });
+}
+
+document.getElementById('startBtn').addEventListener('click',()=>{
+  startMatch();
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  ps=0;bs=0;playerScoreEl.textContent=ps;botScoreEl.textContent=bs; resetMatch();
+});
+
+document.getElementById('newRound').addEventListener('click',()=>{resetRound();});
+document.getElementById('swapStart').addEventListener('click',()=>{playerStarts=!playerStarts; resetRound(); updateLabels();});
+
+cells.forEach(c=>c.addEventListener('click',()=>onCellClick(c)));
+
+function startMatch(){
+  updateLabels();
+  target = parseInt(document.getElementById('targetScore').value) || 0;
+  ps=0;bs=0;playerScoreEl.textContent=ps;botScoreEl.textContent=bs;
+  resetRound();
+  playing=true;
+}
+
+function resetMatch(){
+  playing=false;status.textContent='Press Start to begin';
+  boardState = Array(9).fill('');
+  cells.forEach(c=>{c.textContent='';c.classList.remove('disabled','x','o')});
+}
+
+function resetRound(){
+  boardState = Array(9).fill('');
+  cells.forEach(c=>{c.textContent='';c.classList.remove('disabled','x','o')});
+  status.textContent = (playerStarts? `${playerName} (X) to start` : 'Bot (O) to start');
+  if(!playerStarts) setTimeout(botMove,400);
+}
+
+function onCellClick(cell){
+  if(!playing) return;
+  const i = Number(cell.dataset.i);
+  if(boardState[i]) return;
+  if(!playerStarts && boardState.filter(Boolean).length===0){ /* if bot starts first, wait */ }
+  makeMove(i,player);
+}
+
+function makeMove(i,who){
+  if(boardState[i]) return;
+  boardState[i]=who;
+  const el = cells.find(c=>Number(c.dataset.i)===i);
+  el.textContent = who;
+  el.classList.add('disabled');
+  el.classList.toggle('x', who === 'X');
+  el.classList.toggle('o', who === 'O');
+  const w = checkWinner(boardState);
+  if(w){
+    endRound(w);
+    return;
+  }
+  if(boardState.every(Boolean)){
+    endRound('draw');return;
+  }
+  if(who===player){
+    setTimeout(botMove,350);
+  }
+}
+
+function endRound(w){
+  if(w==='draw'){
+    status.textContent='Draw!';
+  } else if(w===player){
+    status.textContent=`${playerName} wins!`;
+    ps++; playerScoreEl.textContent=ps;
+  } else {
+    status.textContent='Bot wins!';
+    bs++; botScoreEl.textContent=bs;
+  }
+  if(target>0){
+    if(ps>=target){status.textContent=`${playerName} reached ${target} — You win the match!`; playing=false;}
+    if(bs>=target){status.textContent=`Bot reached ${target} — Bot wins the match.`; playing=false;}
+  }
+}
+
+function checkWinner(b){
+  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for(const [a,c,d] of lines){
+    if(b[a] && b[a]===b[c] && b[a]===b[d]) return b[a];
+  }
+  return null;
+}
+
+function botMove(){
+  if(!playing) return;
+  const diff = document.getElementById('difficulty').value;
+  // try server-side bot API first, fall back to client AI if unavailable
+  (async ()=>{
+    try{
+      const res = await fetch('/api/bot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({board:boardState,difficulty:diff,player:player,bot:bot})});
+      if(res.ok){
+        const data = await res.json();
+        if(data && data.move!=null){ makeMove(data.move, bot); return; }
+      }
+    }catch(e){ /* ignore and fallback */ }
+    // fallback to client-side AI
+    let move;
+    if(diff==='easy') move = botEasy();
+    else if(diff==='medium') move = botMedium();
+    else move = botHard();
+    if(move!=null) makeMove(move,bot);
+  })();
+}
+
+function botEasy(){
+  const empt = boardState.map((v,i)=>v?null:i).filter(x=>x!==null);
+  return empt[Math.floor(Math.random()*empt.length)];
+}
+
+function botMedium(){
+  // try to win
+  for(let i=0;i<9;i++) if(!boardState[i]){
+    const copy=[...boardState]; copy[i]=bot; if(checkWinner(copy)===bot) return i;
+  }
+  // try to block
+  for(let i=0;i<9;i++) if(!boardState[i]){
+    const copy=[...boardState]; copy[i]=player; if(checkWinner(copy)===player) return i;
+  }
+  return botEasy();
+}
+
+function botHard(){
+  // minimax
+  const best = minimax(boardState, bot);
+  return best.index;
+}
+
+function minimax(newBoard, currentPlayer){
+  const avail = newBoard.map((v,i)=>v?null:i).filter(x=>x!==null);
+  const winner = checkWinner(newBoard);
+  if(winner===player) return {score:-10};
+  if(winner===bot) return {score:10};
+  if(avail.length===0) return {score:0};
+
+  const moves = [];
+  for(const i of avail){
+    const move = {}; move.index = i;
+    newBoard[i]=currentPlayer;
+    const result = minimax(newBoard, currentPlayer===bot?player:bot);
+    move.score = result.score;
+    newBoard[i]='';
+    moves.push(move);
+  }
+  let bestMove;
+  if(currentPlayer===bot){
+    let bestScore=-Infinity; for(const m of moves) if(m.score>bestScore){bestScore=m.score;bestMove=m;}
+  } else {
+    let bestScore=Infinity; for(const m of moves) if(m.score<bestScore){bestScore=m.score;bestMove=m;}
+  }
+  return bestMove;
+}
+
+// initialize defaults
+const savedTheme = localStorage.getItem('ttt-theme') || 'system';
+const savedAccent = localStorage.getItem('ttt-accent') || '#ff4fa3';
+const savedBg = localStorage.getItem('ttt-bg') || '#ffffff';
+applyTheme(savedTheme, savedAccent, savedBg);
+if(backgroundColor){
+  backgroundColor.style.display = 'block';
+}
+updateLabels();
+resetMatch();
+
+// THEME TOGGLE (logo)
+(function(){
+  const btn = document.getElementById('themeToggle');
+  if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+    if(themeSelect) themeSelect.value = next;
+    applyTheme(next, accentColor.value);
+  });
+})();
+
+</script>
+</body>
+</html>

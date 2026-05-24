@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MPath | Career Aptitude Preview</title>
+    <style>
+      :root {
+        --background: #f8f9fb;
+        --primary: #243b53;
+        --secondary: #526d82;
+        --accent: #a8b5a2;
+        --border: #e5e7eb;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--background);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(36, 59, 83, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(36, 59, 83, 0.04) 1px, transparent 1px);
+        background-size: 42px 42px;
+      }
+
+      main {
+        position: relative;
+        width: min(1080px, 100%);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 28px 20px;
+      }
+
+      .shell {
+        min-height: calc(100vh - 56px);
+        display: grid;
+        place-items: center;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 32px;
+        align-items: center;
+        width: 100%;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--secondary);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--primary);
+        font-size: clamp(42px, 8vw, 76px);
+        line-height: 0.96;
+      }
+
+      h2 {
+        margin: 0;
+        color: var(--primary);
+        font-size: clamp(24px, 5vw, 38px);
+        line-height: 1.15;
+      }
+
+      h3 {
+        margin: 0;
+        color: var(--primary);
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+        padding: 28px;
+        box-shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+      }
+
+      .hero-copy p {
+        max-width: 620px;
+        font-size: 18px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      button,
+      .button {
+        min-height: 44px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        padding: 12px 18px;
+        font: inherit;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      button:hover,
+      .button:hover {
+        transform: translateY(-1px);
+        background: var(--secondary);
+      }
+
+      button.secondary {
+        border-color: var(--border);
+        background: white;
+        color: var(--primary);
+      }
+
+      button.secondary:hover {
+        border-color: var(--primary);
+        background: var(--background);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+      }
+
+      .model-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .model-list div {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--background);
+        padding: 13px 14px;
+        color: var(--secondary);
+        font-weight: 700;
+      }
+
+      .progress-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .progress {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--border);
+        margin-bottom: 28px;
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: inherit;
+        background: var(--accent);
+        transition: width 250ms ease;
+      }
+
+      .likert {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(36px, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .likert button {
+        aspect-ratio: 1;
+        min-height: 44px;
+        border-radius: 999px;
+        background: white;
+        border-color: var(--border);
+        color: var(--secondary);
+        padding: 0;
+      }
+
+      .likert button.selected {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+
+      .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .mini-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--background);
+        padding: 16px;
+      }
+
+      ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 800px) {
+        .hero,
+        .result-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .shell {
+          place-items: start;
+        }
+
+        .card {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section id="landing" class="shell">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">MPath</p>
+            <h1>Find Your Best-Fit Technology Career Path.</h1>
+            <p>
+              A premium Computer Science aptitude assessment preview that evaluates technical tendencies,
+              problem-solving behavior, workplace style, communication, creativity, leadership, and AI adaptability.
+            </p>
+            <div class="actions">
+              <button id="startBtn">Start Assessment</button>
+              <a class="button secondary" href="../index.html">Back to Portfolio</a>
+            </div>
+          </div>
+          <div class="card">
+            <p class="eyebrow">Assessment Model</p>
+            <h2>One final career match</h2>
+            <div class="model-list">
+              <div>70% Primary aptitude</div>
+              <div>20% Supporting traits</div>
+              <div>10% Consistency pattern</div>
+            </div>
+            <p>This HTML version is made for instant portfolio preview. The full production app lives in the Next.js codebase.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="assessment" class="shell hidden">
+        <div class="card" style="width: min(820px, 100%)">
+          <div class="progress-meta">
+            <span id="counter">Question 1 of 1</span>
+            <span id="percent">0%</span>
+          </div>
+          <div class="progress"><span id="bar"></span></div>
+          <p class="eyebrow">MPath Assessment</p>
+          <h2 id="questionText"></h2>
+          <div class="likert" id="likert"></div>
+          <div class="scale-labels">
+            <span>Strongly disagree</span>
+            <span>Neutral</span>
+            <span>Strongly agree</span>
+          </div>
+          <div class="nav">
+            <button id="backBtn" class="secondary">Back</button>
+            <button id="nextBtn" disabled>Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="shell hidden">
+        <div class="card" style="width: min(940px, 100%)">
+          <p class="eyebrow">Your Best Fit Career</p>
+          <h1 id="roleTitle"></h1>
+          <p id="roleSummary"></p>
+          <div class="result-grid">
+            <div class="mini-card">
+              <h3>Strongest strengths detected</h3>
+              <ul id="strengths"></ul>
+            </div>
+            <div class="mini-card">
+              <h3>Areas to improve</h3>
+              <ul id="improvements"></ul>
+            </div>
+            <div class="mini-card">
+              <h3>Recommended skills</h3>
+              <ul id="skills"></ul>
+            </div>
+            <div class="mini-card">
+              <h3>Starter roadmap</h3>
+              <ul id="roadmap"></ul>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="retakeBtn">Retake Assessment</button>
+            <a class="button secondary" href="../index.html">Back to Portfolio</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const roles = [
+        "QA Tester",
+        "Data Analyst",
+        "Software Engineer",
+        "Business Analyst",
+        "UI/UX Designer",
+        "Cybersecurity Specialist",
+        "AI/Data Specialist",
+        "Prompt Engineer",
+        "Web Designer",
+        "Animator",
+        "Project Manager",
+      ];
+
+      function q(id, text, role, weight, reversed) {
+        return { id, text, role, weight, reversed };
+      }
+
+      const questionBank = [
+        q("qa_01", "When reviewing a document or report, I naturally notice typos, formatting inconsistencies, and small errors that others overlook.", "QA Tester", 1, false),
+        q("qa_02", "I find it satisfying to verify that every item in a checklist has been properly completed before marking a task as done.", "QA Tester", 1, false),
+        q("qa_03", "I get frustrated when software behaves differently than documented, even if the difference seems minor.", "QA Tester", 1, false),
+        q("qa_04", "I prefer well-defined, repeatable processes over constantly changing, ambiguous workflows.", "QA Tester", 1, false),
+        q("qa_05", "When something works most of the time but fails occasionally, I am driven to find exactly when and why it fails.", "QA Tester", 1, false),
+        q("qa_06", "I lose interest quickly when asked to verify the same feature multiple times with minor variations.", "QA Tester", -1, true),
+        q("qa_07", "Before submitting any work, I typically run through it at least twice to catch errors I may have missed.", "QA Tester", 1, false),
+        q("qa_08", "I enjoy thinking about unusual edge cases and boundary conditions that most people would not consider.", "QA Tester", 1, false),
+        q("qa_09", "I believe that a product that almost works is fundamentally different from one that completely works.", "QA Tester", 1, false),
+        q("qa_10", "I am patient with slow processes as long as the final result meets a rigorous standard of quality.", "QA Tester", 1, false),
+        q("qa_11", "When using an app or website, I notice broken interactions and inconsistencies before most other users do.", "QA Tester", 1, false),
+        q("qa_12", "I would rather find a critical defect before release than discover it after deployment.", "QA Tester", 1, false),
+        q("qa_13", "I find detailed test case documentation valuable, even when it takes significant time to produce.", "QA Tester", 1, false),
+        q("qa_14", "I tend to trust systems only after personally verifying their outputs.", "QA Tester", 1, false),
+        q("qa_15", "I feel comfortable running the same test scenario under dozens of different configurations.", "QA Tester", 1, false),
+        q("qa_16", "I dislike being the person who slows a team down to ensure quality standards are properly met.", "QA Tester", -1, true),
+        q("qa_17", "I enjoy creating structured regression suites that can be re-executed reliably across releases.", "QA Tester", 1, false),
+        q("qa_18", "I prefer to define success criteria before work begins, rather than evaluating quality afterward.", "QA Tester", 1, false),
+        q("qa_19", "I notice when a system behaves differently across devices, browsers, or operating environments.", "QA Tester", 1, false),
+        q("qa_20", "In group projects, I naturally take on the role of reviewing others' work before it is submitted.", "QA Tester", 1, false),
+        q("da_01", "I enjoy looking at large datasets to identify trends that are not immediately obvious on the surface.", "Data Analyst", 1, false),
+        q("da_02", "I prefer making decisions based on empirical data rather than on intuition or gut feeling.", "Data Analyst", 1, false),
+        q("da_03", "I find it satisfying to create charts and dashboards that make complex data easy to interpret.", "Data Analyst", 1, false),
+        q("da_04", "When presented with statistics, I instinctively question what underlying factors might explain the pattern.", "Data Analyst", 1, false),
+        q("da_05", "I am comfortable working with spreadsheets or databases for extended periods of time.", "Data Analyst", 1, false),
+        q("da_06", "I struggle to remain engaged when work does not involve measurable, quantifiable outcomes.", "Data Analyst", 1, false),
+        q("da_07", "I enjoy finding correlations between variables, even in datasets that seem unrelated at first glance.", "Data Analyst", 1, false),
+        q("da_08", "I believe a well-organized dataset can reveal insights that are otherwise completely invisible.", "Data Analyst", 1, false),
+        q("da_09", "I find cleaning and structuring messy data almost as intellectually engaging as analyzing it.", "Data Analyst", 1, false),
+        q("da_10", "When something unexpected happens in a business context, my first instinct is to look at the underlying data.", "Data Analyst", 1, false),
+        q("da_11", "I find it difficult to draw conclusions without first checking the statistical significance of my findings.", "Data Analyst", 1, false),
+        q("da_12", "I enjoy learning new ways to filter, aggregate, and pivot data to answer different business questions.", "Data Analyst", 1, false),
+        q("da_13", "I believe most business arguments can be resolved or meaningfully improved by examining data more carefully.", "Data Analyst", 1, false),
+        q("da_14", "I am comfortable presenting analytical findings to audiences unfamiliar with statistical methods.", "Data Analyst", 1, false),
+        q("da_15", "I naturally think in terms of ratios, percentages, and averages even in everyday situations.", "Data Analyst", 1, false),
+        q("da_16", "I lose interest in data-heavy projects when there is no clear question the analysis is meant to answer.", "Data Analyst", -1, true),
+        q("da_17", "I enjoy identifying outliers in data and investigating what specific factors caused them.", "Data Analyst", 1, false),
+        q("da_18", "I prefer summarizing information quantitatively rather than writing lengthy qualitative reports.", "Data Analyst", 1, false),
+        q("da_19", "When reading a report, I often go directly to the charts and figures before reading the text.", "Data Analyst", 1, false),
+        q("da_20", "I find the process of formulating a data-driven hypothesis and then testing it to be intellectually rewarding.", "Data Analyst", 1, false),
+        q("se_01", "I enjoy breaking a complex problem into smaller, more manageable components before writing any code.", "Software Engineer", 1, false),
+        q("se_02", "When something breaks in a system I am working on, I feel a strong urge to find the root cause rather than applying a quick fix.", "Software Engineer", 1, false),
+        q("se_03", "I enjoy designing systems that are efficient, scalable, and easy for other developers to maintain.", "Software Engineer", 1, false),
+        q("se_04", "I find it satisfying to abstract repeated logic into reusable functions or well-named components.", "Software Engineer", 1, false),
+        q("se_05", "I am energized when given an ambiguous technical problem that requires me to design a solution from scratch.", "Software Engineer", 1, false),
+        q("se_06", "I prefer to understand how a tool or library works internally before relying on it in a production environment.", "Software Engineer", 1, false),
+        q("se_07", "I enjoy working through complex logic puzzles even when they are not directly related to a work task.", "Software Engineer", 1, false),
+        q("se_08", "I find debugging a system more intellectually engaging than building new features.", "Software Engineer", 1, false),
+        q("se_09", "I prefer written, well-structured technical specifications over informal verbal instructions for implementation.", "Software Engineer", 1, false),
+        q("se_10", "I am frustrated when code works but is difficult to read, maintain, or extend by other engineers.", "Software Engineer", 1, false),
+        q("se_11", "I enjoy thinking about how different modules in a system interact and depend on each other.", "Software Engineer", 1, false),
+        q("se_12", "I feel accomplished when a system I designed handles edge cases that no one explicitly asked me to consider.", "Software Engineer", 1, false),
+        q("se_13", "I prefer building tools or automation rather than performing repetitive manual tasks.", "Software Engineer", 1, false),
+        q("se_14", "When reading documentation, I often try to mentally reconstruct how the underlying system is implemented.", "Software Engineer", 1, false),
+        q("se_15", "I enjoy contributing to technical architecture decisions, not just implementing features that others have defined.", "Software Engineer", 1, false),
+        q("se_16", "I find version control, branching strategies, and code review processes genuinely useful, not just bureaucratic overhead.", "Software Engineer", 1, false),
+        q("se_17", "I would rather spend extra time making a solution correct and well-structured than ship something that barely works.", "Software Engineer", 1, false),
+        q("se_18", "I find it natural to think in terms of inputs, outputs, state transformations, and side effects.", "Software Engineer", 1, false),
+        q("se_19", "I feel comfortable working on a complex problem alone for several hours without needing external input.", "Software Engineer", 1, false),
+        q("se_20", "When I encounter a bug I cannot immediately explain, I become more curious rather than more frustrated.", "Software Engineer", 1, false),
+        q("ba_01", "I am good at listening to stakeholders with different needs and synthesizing their requirements into a unified specification.", "Business Analyst", 1, false),
+        q("ba_02", "I enjoy translating complex technical concepts into language that non-technical team members can understand.", "Business Analyst", 1, false),
+        q("ba_03", "I find process mapping and workflow documentation genuinely satisfying to produce.", "Business Analyst", 1, false),
+        q("ba_04", "I naturally think about how a system change will affect business operations before considering its technical complexity.", "Business Analyst", 1, false),
+        q("ba_05", "I am comfortable writing detailed requirement documents that bridge the gap between business and technical teams.", "Business Analyst", 1, false),
+        q("ba_06", "I enjoy identifying inefficiencies in existing workflows and proposing concrete process improvements.", "Business Analyst", 1, false),
+        q("ba_07", "I prefer collaborative meetings with multiple stakeholders over working independently on technical tasks.", "Business Analyst", 1, false),
+        q("ba_08", "When gathering requirements, I ask 'why' as often as I ask 'what', to understand the underlying business need.", "Business Analyst", 1, false),
+        q("ba_09", "I find it easy to understand an organization's business model and how different departments interact.", "Business Analyst", 1, false),
+        q("ba_10", "I enjoy validating that delivered software actually aligns with the original business objectives.", "Business Analyst", 1, false),
+        q("ba_11", "I am energized by being the bridge between technical teams and business stakeholders.", "Business Analyst", 1, false),
+        q("ba_12", "I tend to think about cost, ROI, and business impact when evaluating technical solutions.", "Business Analyst", 1, false),
+        q("ba_13", "I excel at facilitating workshops that align a group of people on a shared goal or decision.", "Business Analyst", 1, false),
+        q("ba_14", "I feel comfortable challenging a stakeholder's stated requirement when I believe it does not serve the real business goal.", "Business Analyst", 1, false),
+        q("ba_15", "I consistently create structured notes, diagrams, and documentation after every important meeting.", "Business Analyst", 1, false),
+        q("ba_16", "I find working with ambiguous, poorly defined problems more stimulating than well-specified technical tasks.", "Business Analyst", 1, false),
+        q("ba_17", "I believe that understanding a problem deeply is more valuable than arriving at a solution quickly.", "Business Analyst", 1, false),
+        q("ba_18", "I find it natural to create visual models — flow diagrams, RACI charts, process maps — to clarify complexity.", "Business Analyst", 1, false),
+        q("ux_01", "When using a product, I instinctively notice when a feature is harder to use than it should be.", "UI/UX Designer", 1, false),
+        q("ux_02", "I genuinely enjoy observing how people interact with software and identifying where they get confused.", "UI/UX Designer", 1, false),
+        q("ux_03", "I believe the success of a product is ultimately determined by whether users find it intuitive, not whether it is technically impressive.", "UI/UX Designer", 1, false),
+        q("ux_04", "I think carefully about how a user will feel at each step of an interaction before designing anything.", "UI/UX Designer", 1, false),
+        q("ux_05", "I find it natural to advocate for the user's experience even when it conflicts with business or engineering priorities.", "UI/UX Designer", 1, false),
+        q("ux_06", "I prefer designing simple, focused interactions over feature-rich interfaces that attempt to do many things at once.", "UI/UX Designer", 1, false),
+        q("ux_07", "I find paper sketching and low-fidelity wireframing valuable, even in very early ideation stages.", "UI/UX Designer", 1, false),
+        q("ux_08", "I regularly notice and critique the usability of everyday physical objects, not just software products.", "UI/UX Designer", 1, false),
+        q("ux_09", "I am motivated by the idea of designing something that makes a user's life meaningfully easier.", "UI/UX Designer", 1, false),
+        q("ux_10", "I enjoy creating user flows, personas, and journey maps before beginning any visual design work.", "UI/UX Designer", 1, false),
+        q("ux_11", "I find prototype testing with real users more informative than any internal design review or critique.", "UI/UX Designer", 1, false),
+        q("ux_12", "I am comfortable presenting my design rationale in detail and defending it based on user-centered principles.", "UI/UX Designer", 1, false),
+        q("ux_13", "When I encounter a cluttered or confusing interface, I immediately begin mentally redesigning it.", "UI/UX Designer", 1, false),
+        q("ux_14", "I find it more important to understand the user's mental model than to follow established interface conventions.", "UI/UX Designer", 1, false),
+        q("ux_15", "I consider accessibility and inclusive design to be core requirements, not optional improvements.", "UI/UX Designer", 1, false),
+        q("ux_16", "I prefer collaborative design work with developers and product managers over designing in isolation.", "UI/UX Designer", 1, false),
+        q("ux_17", "I believe a single confusing interaction can permanently damage a user's trust in a product.", "UI/UX Designer", 1, false),
+        q("ux_18", "I am energized by conducting user interviews and distilling raw qualitative data into design insights.", "UI/UX Designer", 1, false),
+        q("cy_01", "I am naturally skeptical of systems, processes, and claims that are presented without adequate verification.", "Cybersecurity Specialist", 1, false),
+        q("cy_02", "I find myself thinking about how I could exploit a system's weakness before thinking about how to use it legitimately.", "Cybersecurity Specialist", 1, false),
+        q("cy_03", "I believe that no system is ever fully secure — only secure enough for a given threat model.", "Cybersecurity Specialist", 1, false),
+        q("cy_04", "I am drawn to understanding attacker methodologies because I believe effective defenders must think like attackers.", "Cybersecurity Specialist", 1, false),
+        q("cy_05", "I feel uncomfortable when a process asks me to trust something without independently verifying it.", "Cybersecurity Specialist", 1, false),
+        q("cy_06", "I find reading about real-world security incidents and postmortem analyses genuinely fascinating.", "Cybersecurity Specialist", 1, false),
+        q("cy_07", "I tend to evaluate new technology primarily through the lens of potential misuse and security risk.", "Cybersecurity Specialist", 1, false),
+        q("cy_08", "I enjoy hunting for anomalies and unexpected patterns in system logs and network behavior.", "Cybersecurity Specialist", 1, false),
+        q("cy_09", "I believe that human behavior and social engineering are often greater security risks than technical vulnerabilities.", "Cybersecurity Specialist", 1, false),
+        q("cy_10", "I find cryptographic and authentication concepts intellectually compelling.", "Cybersecurity Specialist", 1, false),
+        q("cy_11", "I prefer to think adversarially — imagining what a malicious actor would do before designing a defense.", "Cybersecurity Specialist", 1, false),
+        q("cy_12", "I am naturally meticulous about permissions, access levels, and who should be allowed to see what data.", "Cybersecurity Specialist", 1, false),
+        q("cy_13", "I find security audits and code reviews for vulnerabilities more engaging than building new product features.", "Cybersecurity Specialist", 1, false),
+        q("cy_14", "I feel a strong sense of responsibility when I identify a security gap that others have overlooked.", "Cybersecurity Specialist", 1, false),
+        q("cy_15", "I believe effective security practices should be invisible to end users but rigorously enforced at the system level.", "Cybersecurity Specialist", 1, false),
+        q("cy_16", "I enjoy staying current with emerging attack techniques, CVEs, and newly discovered threat vectors.", "Cybersecurity Specialist", 1, false),
+        q("cy_17", "I am drawn to environments where the adversary is intelligent and constantly evolving their tactics.", "Cybersecurity Specialist", 1, false),
+        q("cy_18", "I believe that most organizations significantly underestimate the sophistication of threats they face.", "Cybersecurity Specialist", 1, false),
+        q("ai_01", "I find the idea of training a model to make decisions more exciting than writing explicit rule-based logic.", "AI/Data Specialist", 1, false),
+        q("ai_02", "I enjoy experimenting with different modeling approaches and iterating rapidly based on quantitative performance results.", "AI/Data Specialist", 1, false),
+        q("ai_03", "I am comfortable with probabilistic outcomes and accept that no machine learning model achieves perfect accuracy.", "AI/Data Specialist", 1, false),
+        q("ai_04", "I find feature engineering — selecting, transforming, and creating data attributes — to be a creative and engaging process.", "AI/Data Specialist", 1, false),
+        q("ai_05", "I enjoy reading research papers and technical blogs about advances in artificial intelligence and ML.", "AI/Data Specialist", 1, false),
+        q("ai_06", "I believe data pipelines and data quality are more important to AI system success than the choice of model architecture.", "AI/Data Specialist", 1, false),
+        q("ai_07", "I am energized by the challenge of automating tasks that previously required human judgment and expertise.", "AI/Data Specialist", 1, false),
+        q("ai_08", "I enjoy evaluating model performance across different demographic subgroups and identifying systematic bias.", "AI/Data Specialist", 1, false),
+        q("ai_09", "I am comfortable working in ambiguous problem spaces where even the success metric itself is unclear.", "AI/Data Specialist", 1, false),
+        q("ai_10", "I find it intellectually satisfying to understand why a model made a specific prediction in a particular case.", "AI/Data Specialist", 1, false),
+        q("ai_11", "I am excited about the potential for AI to transform industries in ways that are not yet fully understood.", "AI/Data Specialist", 1, false),
+        q("ai_12", "I enjoy combining statistical knowledge with software engineering to build production-grade AI pipelines.", "AI/Data Specialist", 1, false),
+        q("ai_13", "I find generative AI systems interesting not just as end products, but as technical artifacts to study and improve.", "AI/Data Specialist", 1, false),
+        q("ai_14", "I prefer projects involving continuous model learning and improvement over static, fixed-logic software systems.", "AI/Data Specialist", 1, false),
+        q("ai_15", "I am comfortable explaining the trade-offs between model accuracy, interpretability, and computational cost to stakeholders.", "AI/Data Specialist", 1, false),
+        q("ai_16", "I believe the most critical skill in AI/ML work is the ability to frame the right problem before any modeling begins.", "AI/Data Specialist", 1, false),
+        q("ai_17", "I find myself drawn to reading about the theoretical foundations of machine learning, not just practical applications.", "AI/Data Specialist", 1, false),
+        q("ai_18", "I enjoy designing evaluation benchmarks that rigorously test an AI system beyond surface-level accuracy metrics.", "AI/Data Specialist", 1, false),
+        q("pe_01", "I enjoy experimenting with different ways of phrasing instructions to observe how they change an AI system's output.", "Prompt Engineer", 1, false),
+        q("pe_02", "I find it fascinating that small changes in wording can dramatically alter the quality of an AI model's response.", "Prompt Engineer", 1, false),
+        q("pe_03", "I enjoy iterating and refining natural language instructions until the resulting output exactly matches my intent.", "Prompt Engineer", 1, false),
+        q("pe_04", "I am comfortable working at the intersection of technical AI systems and natural language communication.", "Prompt Engineer", 1, false),
+        q("pe_05", "I find designing instructional frameworks for AI systems to be a creative and intellectually rewarding process.", "Prompt Engineer", 1, false),
+        q("pe_06", "I enjoy critically evaluating AI outputs and diagnosing exactly why a response failed to meet expectations.", "Prompt Engineer", 1, false),
+        q("pe_07", "I believe effective prompt design requires both analytical precision and genuine creative intuition.", "Prompt Engineer", 1, false),
+        q("pe_08", "I am curious about how context, framing, and examples influence the reasoning behavior of large language models.", "Prompt Engineer", 1, false),
+        q("pe_09", "I find it satisfying to create prompt templates that consistently produce high-quality outputs across varied inputs.", "Prompt Engineer", 1, false),
+        q("pe_10", "I am energized by the challenge of extracting reliable, structured responses from inherently probabilistic AI systems.", "Prompt Engineer", 1, false),
+        q("pe_11", "I enjoy designing few-shot examples that teach an AI model how to perform a task without explicit programming.", "Prompt Engineer", 1, false),
+        q("pe_12", "I am comfortable measuring prompt quality empirically and comparing competing prompt strategies with benchmarks.", "Prompt Engineer", 1, false),
+        q("pe_13", "I believe the discipline of prompt engineering will become increasingly important as AI systems grow more powerful.", "Prompt Engineer", 1, false),
+        q("pe_14", "I enjoy creating multi-step reasoning prompts that guide an AI model through a complex problem systematically.", "Prompt Engineer", 1, false),
+        q("pe_15", "I find that the best prompts feel more like carefully engineered specifications than natural conversation.", "Prompt Engineer", 1, false),
+        q("pe_16", "I enjoy exploring how different AI models respond differently to identical prompts, and what this reveals about them.", "Prompt Engineer", 1, false),
+        q("wd_01", "I find the process of creating a visually compelling layout more engaging than solving a logical programming problem.", "Web Designer", 1, false),
+        q("wd_02", "I pay close attention to color harmony, typographic hierarchy, and spacing when evaluating any visual design.", "Web Designer", 1, false),
+        q("wd_03", "I enjoy designing visual systems — color palettes, type scales, component libraries — that ensure consistency.", "Web Designer", 1, false),
+        q("wd_04", "I believe a brand's visual identity fundamentally shapes how users perceive its credibility and quality.", "Web Designer", 1, false),
+        q("wd_05", "I find creating mood boards, style guides, and visual direction documents to be a genuinely valuable part of design work.", "Web Designer", 1, false),
+        q("wd_06", "I enjoy the challenge of making a complex website look clean, elegant, and visually uncluttered.", "Web Designer", 1, false),
+        q("wd_07", "I stay current with visual design trends and follow the aesthetic directions emerging in digital media.", "Web Designer", 1, false),
+        q("wd_08", "I find it natural to think about visual hierarchy — guiding a viewer's eye through a page in a deliberate sequence.", "Web Designer", 1, false),
+        q("wd_09", "I feel energized when given creative freedom to define the complete visual direction of a project.", "Web Designer", 1, false),
+        q("wd_10", "I prefer designing for visual impact and brand storytelling over optimizing strictly for functional usability.", "Web Designer", 1, false),
+        q("wd_11", "I enjoy working with motion, transitions, and micro-animations to bring a visual design to life.", "Web Designer", 1, false),
+        q("wd_12", "I find pixel-level detail — alignment, spacing, icon sizing — important enough to spend significant time on.", "Web Designer", 1, false),
+        q("wd_13", "I am comfortable collaborating with brand teams to translate abstract brand values into a coherent visual language.", "Web Designer", 1, false),
+        q("wd_14", "I believe a beautiful, polished interface is itself a meaningful and powerful form of communication.", "Web Designer", 1, false),
+        q("wd_15", "I enjoy exploring multiple distinct visual directions for the same project before converging on a final concept.", "Web Designer", 1, false),
+        q("wd_16", "I find creating responsive, device-adaptive visual layouts more satisfying than building backend systems.", "Web Designer", 1, false),
+        q("wd_17", "I feel a strong connection between visual craft and emotional impact — good design should make people feel something.", "Web Designer", 1, false),
+        q("wd_18", "I find myself critiquing the visual quality of websites and digital products even when browsing casually.", "Web Designer", 1, false),
+        q("an_01", "I think naturally in terms of time and motion — how an element should move to convey meaning or emotion.", "Animator", 1, false),
+        q("an_02", "I enjoy crafting visual narratives through sequential imagery, even without using written words.", "Animator", 1, false),
+        q("an_03", "I find it satisfying to spend significant time perfecting the timing and easing curve of a single animated transition.", "Animator", 1, false),
+        q("an_04", "I am drawn to visual storytelling and believe motion media is among the most powerful forms of human expression.", "Animator", 1, false),
+        q("an_05", "I enjoy studying how real-world physics — weight, inertia, momentum — can make digital motion feel more realistic.", "Animator", 1, false),
+        q("an_06", "I find character expression and emotional storytelling through movement to be deeply compelling artistic work.", "Animator", 1, false),
+        q("an_07", "I am patient with long, iterative creative processes where the final result is achieved through careful refinement.", "Animator", 1, false),
+        q("an_08", "I feel energized by projects that combine strong artistic vision with demanding technical execution.", "Animator", 1, false),
+        q("an_09", "I enjoy thinking about how visual metaphors and motion can communicate abstract or complex concepts.", "Animator", 1, false),
+        q("an_10", "I prefer creative work that involves deep individual focus over collaborative, meeting-heavy environments.", "Animator", 1, false),
+        q("an_11", "I find storyboarding — planning a visual sequence before production — to be an essential creative discipline.", "Animator", 1, false),
+        q("an_12", "I enjoy experimenting with different animation styles — 2D, 3D, motion graphics — to find the right aesthetic.", "Animator", 1, false),
+        q("an_13", "I believe the emotional impact of a scene is determined as much by timing and pacing as by visual design quality.", "Animator", 1, false),
+        q("an_14", "I am energized by the challenge of making an inanimate object feel alive and emotionally expressive through motion.", "Animator", 1, false),
+        q("an_15", "I find myself analyzing and critiquing the animation quality in films, games, and digital products.", "Animator", 1, false),
+        q("an_16", "I am comfortable working alone on creative tasks for extended periods without needing external validation.", "Animator", 1, false),
+        q("an_17", "I believe the best animation is invisible — the audience should feel the emotion, not notice the technique.", "Animator", 1, false),
+        q("pm_01", "I naturally take ownership of ensuring a team has clarity on what needs to be done, by whom, and by when.", "Project Manager", 1, false),
+        q("pm_02", "I find coordinating the work of multiple people more energizing than performing individual technical work myself.", "Project Manager", 1, false),
+        q("pm_03", "I am energized by creating a project plan that accounts for dependencies, risks, and resource constraints.", "Project Manager", 1, false),
+        q("pm_04", "I feel comfortable making decisions under uncertainty when waiting for more information is not an option.", "Project Manager", 1, false),
+        q("pm_05", "I enjoy tracking progress against milestones and proactively identifying risks before they become problems.", "Project Manager", 1, false),
+        q("pm_06", "I find facilitating productive meetings — setting agendas, keeping discussions focused, capturing action items — to be a genuinely valuable skill.", "Project Manager", 1, false),
+        q("pm_07", "I am comfortable having difficult conversations with stakeholders when a project is at risk of missing a deadline.", "Project Manager", 1, false),
+        q("pm_08", "I find it natural to think about sequencing — what must happen before what — when planning any complex initiative.", "Project Manager", 1, false),
+        q("pm_09", "I prefer overseeing and coordinating work rather than being the primary implementer of a technical solution.", "Project Manager", 1, false),
+        q("pm_10", "I am energized by creating processes and systems that help a team work more effectively together.", "Project Manager", 1, false),
+        q("pm_11", "I believe that scope management — knowing what not to build — is as important as successful execution.", "Project Manager", 1, false),
+        q("pm_12", "I find it natural to summarize project status, key risks, and critical decisions concisely for senior leadership.", "Project Manager", 1, false),
+        q("pm_13", "I am comfortable managing competing priorities across multiple workstreams simultaneously.", "Project Manager", 1, false),
+        q("pm_14", "I believe team morale and psychological safety are as important to project success as technical delivery quality.", "Project Manager", 1, false),
+        q("pm_15", "I find structured retrospectives — reflecting on what went well and what to improve — genuinely useful for team growth.", "Project Manager", 1, false),
+        q("pm_16", "I prefer environments where I can simultaneously influence strategy and oversee tactical execution.", "Project Manager", 1, false),
+        q("pm_17", "I find it satisfying to connect each individual team member's daily work to the organization's broader strategic goal.", "Project Manager", 1, false),
+        q("pm_18", "I am comfortable adjusting a project plan mid-execution when new information changes the optimal path forward.", "Project Manager", 1, false),
+        q("pm_19", "I believe the best project managers are invisible when things go well and decisive when things go wrong.", "Project Manager", 1, false),
+      ];
+
+      function shuffle(items) {
+        const copy = [...items];
+        for (let index = copy.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+        }
+        return copy;
+      }
+
+      function buildBalancedQuestionSet(targetCount = 200) {
+        const byRole = Object.fromEntries(roles.map((role) => [role, []]));
+        questionBank.forEach((question) => byRole[question.role].push(question));
+        const pools = Object.fromEntries(roles.map((role) => [role, shuffle(byRole[role])]));
+        const perRole = Math.floor(targetCount / roles.length);
+        const selected = [];
+        roles.forEach((role) => selected.push(...pools[role].slice(0, perRole)));
+        let cursor = 0;
+        while (selected.length < targetCount && cursor < roles.length * 4) {
+          const role = roles[cursor % roles.length];
+          const candidate = pools[role][perRole + Math.floor(cursor / roles.length)];
+          if (candidate && !selected.some((question) => question.id === candidate.id)) selected.push(candidate);
+          cursor += 1;
+        }
+        return shuffle(selected);
+      }
+
+      let questions = buildBalancedQuestionSet();
+
+      const resultData = {
+        "QA Tester": {
+          summary: "Your pattern suggests a quality-first mindset: careful checking, edge-case awareness, and patience with validation work.",
+          strengths: ["Attention to detail", "Defect detection", "Process discipline"],
+          improvements: ["Automation scripting", "Prioritizing defects by impact", "Communicating findings clearly"],
+          skills: ["Test cases", "Bug reports", "Regression testing", "Postman", "Playwright"],
+          roadmap: ["Learn testing fundamentals", "Write test cases for real apps", "Practice bug reporting", "Try test automation"],
+        },
+        "Data Analyst": {
+          summary: "Your answers point to evidence-based reasoning, pattern recognition, and comfort turning information into useful insight.",
+          strengths: ["Pattern recognition", "Data interpretation", "Quantitative thinking"],
+          improvements: ["SQL depth", "Statistical confidence", "Data storytelling"],
+          skills: ["SQL", "Excel", "Python pandas", "Power BI", "Dashboard design"],
+          roadmap: ["Master spreadsheets", "Learn SQL", "Analyze public datasets", "Build dashboards"],
+        },
+        "Software Engineer": {
+          summary: "Your profile shows systems thinking, debugging persistence, and comfort decomposing complex technical problems.",
+          strengths: ["Logical decomposition", "Debugging", "Technical persistence"],
+          improvements: ["User communication", "Testing discipline", "Project scoping"],
+          skills: ["JavaScript", "TypeScript", "Git", "APIs", "System design"],
+          roadmap: ["Build small apps", "Learn data structures", "Use GitHub", "Deploy a portfolio project"],
+        },
+        "Business Analyst": {
+          summary: "Your strongest signal is bridging business needs and technical execution through structured thinking and communication.",
+          strengths: ["Requirements thinking", "Stakeholder awareness", "Documentation"],
+          improvements: ["Technical vocabulary", "SQL basics", "Agile delivery"],
+          skills: ["User stories", "Process mapping", "Requirements docs", "Jira", "SQL basics"],
+          roadmap: ["Practice requirements writing", "Map workflows", "Learn Agile", "Create case studies"],
+        },
+        "UI/UX Designer": {
+          summary: "Your answers suggest strong user empathy, usability judgment, and sensitivity to how people experience products.",
+          strengths: ["User empathy", "Usability thinking", "Interaction judgment"],
+          improvements: ["Research methods", "Accessibility", "Design critique"],
+          skills: ["Figma", "Wireframing", "User flows", "Accessibility", "Prototyping"],
+          roadmap: ["Study UX basics", "Redesign an app flow", "Build prototypes", "Test with users"],
+        },
+        "Cybersecurity Specialist": {
+          summary: "Your result shows risk awareness, healthy skepticism, and a tendency to investigate anomalies before trusting systems.",
+          strengths: ["Threat awareness", "Anomaly detection", "Defensive reasoning"],
+          improvements: ["Networking fundamentals", "Security tooling", "Incident documentation"],
+          skills: ["Networking", "Linux", "OWASP", "SIEM basics", "Threat modeling"],
+          roadmap: ["Learn networking", "Practice Linux", "Study OWASP", "Do beginner CTFs"],
+        },
+        "AI/Data Specialist": {
+          summary: "Your fit leans toward experimentation, automation, predictive reasoning, and improving decisions through models and data.",
+          strengths: ["Experimentation", "Automation thinking", "Model curiosity"],
+          improvements: ["Statistics", "Data cleaning", "Model evaluation"],
+          skills: ["Python", "Pandas", "Machine learning basics", "Evaluation metrics", "Data pipelines"],
+          roadmap: ["Learn Python", "Practice data cleaning", "Train simple models", "Compare model results"],
+        },
+        "Prompt Engineer": {
+          summary: "Your profile shows skill in instruction design, output refinement, and structured communication with AI systems.",
+          strengths: ["Instruction clarity", "Iterative refinement", "AI output evaluation"],
+          improvements: ["Prompt testing", "Structured outputs", "Domain expertise"],
+          skills: ["Prompt patterns", "Evaluation rubrics", "JSON outputs", "AI workflows", "Documentation"],
+          roadmap: ["Compare prompt versions", "Build prompt templates", "Evaluate outputs", "Create AI workflows"],
+        },
+        "Web Designer": {
+          summary: "Your strongest match is visual digital design: layout, hierarchy, spacing, and polished presentation.",
+          strengths: ["Visual hierarchy", "Layout sense", "Responsive design"],
+          improvements: ["Accessibility", "Design systems", "Frontend implementation"],
+          skills: ["HTML", "CSS", "Figma", "Typography", "Responsive layouts"],
+          roadmap: ["Study layout rules", "Recreate websites", "Build responsive pages", "Create a design system"],
+        },
+        "Animator": {
+          summary: "Your answers suggest visual imagination, timing sensitivity, and interest in communicating through motion and sequence.",
+          strengths: ["Motion thinking", "Visual storytelling", "Timing awareness"],
+          improvements: ["Animation tools", "Storyboarding", "Technical polish"],
+          skills: ["Storyboarding", "After Effects", "Motion principles", "Timing", "Visual pacing"],
+          roadmap: ["Learn motion basics", "Storyboard short ideas", "Create small animations", "Build a showreel"],
+        },
+        "Project Manager": {
+          summary: "Your pattern points to planning, prioritization, coordination, and keeping people aligned through complexity.",
+          strengths: ["Organization", "Prioritization", "Leadership"],
+          improvements: ["Technical depth", "Risk tracking", "Conflict resolution"],
+          skills: ["Agile", "Jira", "Risk logs", "Status reporting", "Roadmapping"],
+          roadmap: ["Learn Agile", "Plan a small project", "Track risks", "Write project retrospectives"],
+        },
+      };
+
+      const state = {
+        index: 0,
+        answers: {},
+      };
+
+      const landing = document.querySelector("#landing");
+      const assessment = document.querySelector("#assessment");
+      const results = document.querySelector("#results");
+      const startBtn = document.querySelector("#startBtn");
+      const backBtn = document.querySelector("#backBtn");
+      const nextBtn = document.querySelector("#nextBtn");
+      const retakeBtn = document.querySelector("#retakeBtn");
+      const questionText = document.querySelector("#questionText");
+      const counter = document.querySelector("#counter");
+      const percent = document.querySelector("#percent");
+      const bar = document.querySelector("#bar");
+      const likert = document.querySelector("#likert");
+
+      function show(screen) {
+        landing.classList.toggle("hidden", screen !== "landing");
+        assessment.classList.toggle("hidden", screen !== "assessment");
+        results.classList.toggle("hidden", screen !== "results");
+      }
+
+      function resetAttempt() {
+        questions = buildBalancedQuestionSet();
+        state.index = 0;
+        state.answers = {};
+      }
+
+      function renderQuestion() {
+        const question = questions[state.index];
+        const progress = Math.round(((state.index + 1) / questions.length) * 100);
+        questionText.textContent = question.text;
+        counter.textContent = `Question ${state.index + 1} of ${questions.length}`;
+        percent.textContent = `${progress}%`;
+        bar.style.width = `${progress}%`;
+        backBtn.disabled = state.index === 0;
+        nextBtn.disabled = !state.answers[question.id];
+        nextBtn.textContent = state.index === questions.length - 1 ? "Finish Assessment" : "Continue";
+        likert.innerHTML = "";
+
+        for (let value = 1; value <= 7; value += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = value;
+          button.className = state.answers[question.id] === value ? "selected" : "";
+          button.addEventListener("click", () => {
+            state.answers[question.id] = value;
+            renderQuestion();
+          });
+          likert.appendChild(button);
+        }
+      }
+
+      function finishAssessment() {
+        const scores = {};
+        const maximum = {};
+        questions.forEach((question) => {
+          scores[question.role] = scores[question.role] || 0;
+          maximum[question.role] = maximum[question.role] || 0;
+          const raw = state.answers[question.id] || 4;
+          const effective = question.reversed ? 8 - raw : raw;
+          const weight = Math.abs(question.weight);
+          scores[question.role] += (effective - 1) * weight;
+          maximum[question.role] += 6 * weight;
+        });
+
+        const role = Object.keys(scores).sort((a, b) => scores[b] / maximum[b] - scores[a] / maximum[a])[0];
+        const data = resultData[role];
+        document.querySelector("#roleTitle").textContent = role;
+        document.querySelector("#roleSummary").textContent = data.summary;
+        fillList("#strengths", data.strengths);
+        fillList("#improvements", data.improvements);
+        fillList("#skills", data.skills);
+        fillList("#roadmap", data.roadmap);
+        show("results");
+      }
+
+      function fillList(selector, items) {
+        const list = document.querySelector(selector);
+        list.innerHTML = "";
+        items.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          list.appendChild(li);
+        });
+      }
+
+      startBtn.addEventListener("click", () => {
+        resetAttempt();
+        renderQuestion();
+        show("assessment");
+      });
+
+      backBtn.addEventListener("click", () => {
+        state.index = Math.max(0, state.index - 1);
+        renderQuestion();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (state.index === questions.length - 1) {
+          finishAssessment();
+          return;
+        }
+        state.index += 1;
+        renderQuestion();
+      });
+
+      retakeBtn.addEventListener("click", () => {
+        resetAttempt();
+        renderQuestion();
+        show("assessment");
+      });
+    </script>
+  </body>
+</html>

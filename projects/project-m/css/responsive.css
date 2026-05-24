@@ -1,0 +1,105 @@
+/* ============================================
+   PROJECT M: CYBER ESCAPE — Responsive
+   ============================================ */
+
+/* ── Large Desktop (>1400px) ── */
+@media (min-width: 1400px) {
+  .container { max-width: 1320px; }
+  .missions-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Desktop (>1024px) ── */
+@media (min-width: 1024px) {
+  .missions-grid { grid-template-columns: repeat(3, 1fr); }
+  .email-layout { display: grid; grid-template-columns: 340px 1fr; gap: 1.5rem; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .nav-score { display: flex; }
+  .hero-title { font-size: clamp(3rem, 5vw, 5.5rem); }
+}
+
+/* ── Tablet (768-1023px) ── */
+@media (max-width: 1023px) {
+  .missions-grid { grid-template-columns: repeat(2, 1fr); }
+  .email-layout { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .email-detail { display: none; }
+  .email-detail.visible { display: block; }
+  .email-list { max-height: 60vh; overflow-y: auto; }
+  .two-col { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: repeat(2, 1fr); }
+  .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); }
+  .mission-content { padding: 1.5rem; }
+}
+
+/* ── Mobile (max 767px) ── */
+@media (max-width: 767px) {
+  :root { font-size: 14px; }
+
+  .missions-grid { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+
+  .game-nav { padding: 0.75rem 1rem; }
+  .nav-brand-name { font-size: 0.8rem; }
+  .nav-score { gap: 0.75rem; }
+  .nav-stat:nth-child(3) { display: none; }
+
+  .container { padding: 0 1rem; }
+  .section { padding: 2.5rem 0; }
+
+  .hero-title { font-size: clamp(2rem, 8vw, 3rem); }
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .hero-btns .btn { width: 100%; }
+
+  .modal { padding: 1.5rem; }
+  .modal h2 { font-size: 1.3rem; }
+
+  .mission-content { padding: 1rem; }
+
+  #maze-canvas { width: 100% !important; height: auto !important; }
+
+  .phase-indicator { gap: 0.35rem; }
+  .phase-dot { width: 8px; height: 8px; }
+
+  .email-actions { flex-direction: column; }
+  .email-actions .btn { width: 100%; }
+
+  .clue-card { font-size: 0.8rem; }
+
+  .shift-selector { gap: 0.75rem; }
+
+  .toast-container { right: 0.75rem; left: 0.75rem; }
+  .toast { min-width: unset; width: 100%; }
+
+  .final-score-display { font-size: clamp(3rem, 15vw, 5rem); }
+
+  .btn-lg { padding: 0.875rem 1.75rem; font-size: 0.9rem; }
+
+  .cipher-display { font-size: 0.9rem; letter-spacing: 0.08em; }
+}
+
+/* ── Small Mobile (<375px) ── */
+@media (max-width: 374px) {
+  .hero-title { font-size: 1.8rem; }
+  .game-nav { gap: 0.5rem; }
+  .nav-stat:nth-child(2), .nav-stat:nth-child(3) { display: none; }
+}
+
+/* ── Landscape Mobile ── */
+@media (max-height: 600px) and (orientation: landscape) {
+  .screen { min-height: unset; }
+  .hero-section { padding: 2rem 0; }
+  #maze-canvas { max-height: 40vh; width: auto; }
+  .maze-controls { margin-top: 0.5rem; }
+  .maze-btn { width: 42px; height: 42px; }
+}
+
+/* ── High DPI ── */
+@media (min-resolution: 2dppx) {
+  .orb { filter: blur(60px); }
+}
+
+/* ── Print ── */
+@media print {
+  .cyber-grid, .orb, .scanline-overlay, .game-nav { display: none; }
+  body { background: white; color: black; }
+}

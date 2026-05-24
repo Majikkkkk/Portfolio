@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project M: Cyber Escape</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Background Effects -->
+    <div class="cyber-grid"></div>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav class="game-nav">
+        <div class="nav-brand">
+
+            <div>
+                <div class="nav-brand-name">
+                    PROJECT M
+                </div>
+
+                <small style="color: var(--text-muted);">
+                    Cyber Escape
+                </small>
+            </div>
+        </div>
+
+        <div class="nav-score">
+            <div class="nav-stat">
+                <span>Threat</span>
+                <span>Low</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Screen -->
+    <main class="container section">
+
+        <div class="text-center anim-fade-up">
+
+            <span class="badge badge-cyan">
+                INTERACTIVE CYBERSECURITY SIMULATION
+            </span>
+
+            <h1 class="section-title neon-text-cyan"
+                style="font-size: clamp(3rem, 8vw, 5rem); margin-top: 1rem;">
+                PROJECT M
+            </h1>
+
+            <p class="section-subtitle"
+               style="margin: auto; margin-top: 1rem;">
+                Cyber Escape — Recover company files,
+                stop ransomware attacks, and secure
+                compromised systems.
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4"
+                 style="margin-top: 2rem; flex-wrap: wrap;">
+
+                <button class="btn btn-primary btn-lg glow-pulse-blue">
+                    New Game
+                </button>
+
+                <button class="btn btn-secondary btn-lg">
+                    Continue
+                </button>
+
+                <button class="btn btn-secondary btn-lg">
+                    Mission Logs
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Mission Cards Preview -->
+        <section
+            style="margin-top: 4rem;"
+            class="three-col">
+
+            <div class="mission-card anim-scale-in delay-1">
+                <div class="mission-number">
+                    MISSION 01
+                </div>
+
+                <div class="mission-icon">
+                    📧
+                </div>
+
+                <h3 class="mission-title">
+                    Phishing Detection
+                </h3>
+
+                <p class="mission-desc">
+                    Analyze suspicious emails and
+                    detect cyber threats.
+                </p>
+
+                <span class="badge badge-red">
+                    Threat Medium
+                </span>
+            </div>
+
+            <div class="mission-card anim-scale-in delay-2">
+                <div class="mission-number">
+                    MISSION 02
+                </div>
+
+                <div class="mission-icon">
+                    🔐
+                </div>
+
+                <h3 class="mission-title">
+                    Password Recovery
+                </h3>
+
+                <p class="mission-desc">
+                    Solve password clues and unlock
+                    compromised systems.
+                </p>
+
+                <span class="badge badge-cyan">
+                    Logic Based
+                </span>
+            </div>
+
+            <div class="mission-card anim-scale-in delay-3">
+                <div class="mission-number">
+                    MISSION 03
+                </div>
+
+                <div class="mission-icon">
+                    🛡️
+                </div>
+
+                <h3 class="mission-title">
+                    Firewall Maze
+                </h3>
+
+                <p class="mission-desc">
+                    Navigate safely through malware
+                    and network threats.
+                </p>
+
+                <span class="badge badge-purple">
+                    Interactive
+                </span>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JS -->
+    <script src="js/game.js"></script>
+
+</body>
+</html>
